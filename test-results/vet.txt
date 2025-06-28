@@ -1,0 +1,3 @@
+# github.com/aura-cli/aura/assets
+# [github.com/aura-cli/aura/assets]
+assets\embed_test.go:9:5: comparison of function Open == nil is always false

@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  # Aura Database - Simple persistent SQLite container
+  aura-db:
+    image: alpine:latest
+    container_name: aura-db
+    volumes:
+      - aura-data:/data
+      - ./scripts/init-db.sql:/init.sql:ro
+    environment:
+      - AURA_DB_PATH=/data/aura.db
+    command: >
+      sh -c "
+        apk add --no-cache sqlite &&
+        if [ ! -f /data/aura.db ]; then
+          sqlite3 /data/aura.db < /init.sql
+        fi &&
+        while true; do sleep 30; done
+      "
+    restart: unless-stopped
+    ports:
+      - "9999:8080" # For potential API access
+    healthcheck:
+      test: ["CMD", "sqlite3", "/data/aura.db", ".tables"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  aura-data:
+    driver: local

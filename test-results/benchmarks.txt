@@ -1,0 +1,148 @@
+# github.com/aura-cli/aura/assets
+# [github.com/aura-cli/aura/assets]
+assets\embed_test.go:9:5: comparison of function Open == nil is always false
+FAIL	github.com/aura-cli/aura/assets [build failed]
+Aura is an intelligent command-line interface assistant designed to augment
+your existing shell with context-aware suggestions, AI-powered assistance,
+and intelligent navigation.
+
+Usage:
+  aura [command]
+
+Available Commands:
+  ask         Ask AI assistant for help
+  bookmark    Manage directory bookmarks
+  completion  Generate the autocompletion script for the specified shell
+  do          Show context-aware action suggestions
+  git         AI-powered Git operations
+  go          Navigate to bookmarked directories
+  help        Help about any command
+  new         Create a new file and open it in your default editor
+  project     Create a project from template
+  uninstall   Uninstall Aura CLI and remove all related files
+
+Flags:
+  -h, --help      help for aura
+  -v, --version   version for aura
+
+Use "aura [command] --help" for more information about a command.
+PASS
+ok  	github.com/aura-cli/aura/cmd/aura	0.305s
+--- FAIL: TestNewClient (0.00s)
+    client_test.go:32: Expected API key error, got: AURA_API_KEY or OPENAI_API_KEY environment variable is required
+FAIL
+exit status 1
+FAIL	github.com/aura-cli/aura/internal/ai	2.451s
+Thinking                     Aura AI Assistant - Interactive Mode
+Type your questions or 'exit' to quit.
+
+❯ Thinking                     No specific context detected in this directory.
+Try running 'aura do' in a project directory (Git repo, Node.js project, etc.)
+--- FAIL: TestExecuteCommand (0.01s)
+    --- FAIL: TestExecuteCommand/valid_command_-_echo (0.01s)
+        do_test.go:76: executeCommand() error = exec: "echo": executable file not found in %PATH%, wantError false
+✓ Created file 'test.txt'
+✓ Created file 'main.go'
+✓ Created file 'README.md'
+Aura is an intelligent command-line interface assistant designed to augment
+your existing shell with context-aware suggestions, AI-powered assistance,
+and intelligent navigation.
+
+Usage:
+  aura [command]
+
+Available Commands:
+  ask         Ask AI assistant for help
+  bookmark    Manage directory bookmarks
+  completion  Generate the autocompletion script for the specified shell
+  do          Show context-aware action suggestions
+  git         AI-powered Git operations
+  go          Navigate to bookmarked directories
+  help        Help about any command
+  new         Create a new file and open it in your default editor
+  project     Create a project from template
+  uninstall   Uninstall Aura CLI and remove all related files
+
+Flags:
+  -h, --help      help for aura
+  -v, --version   version for aura
+
+Use "aura [command] --help" for more information about a command.
+Aura is an intelligent command-line interface assistant designed to augment
+your existing shell with context-aware suggestions, AI-powered assistance,
+and intelligent navigation.
+
+Usage:
+  aura [command]
+
+Available Commands:
+  ask         Ask AI assistant for help
+  bookmark    Manage directory bookmarks
+  completion  Generate the autocompletion script for the specified shell
+  do          Show context-aware action suggestions
+  git         AI-powered Git operations
+  go          Navigate to bookmarked directories
+  help        Help about any command
+  new         Create a new file and open it in your default editor
+  project     Create a project from template
+  uninstall   Uninstall Aura CLI and remove all related files
+
+Flags:
+  -h, --help      help for aura
+  -v, --version   version for aura
+
+Use "aura [command] --help" for more information about a command.
+--- FAIL: TestNewCommandConfiguration (0.04s)
+    new_test.go:276: Expected error with no arguments
+    new_test.go:282: Expected error with too many arguments
+--- FAIL: TestExecuteHelp (0.02s)
+    root_test.go:68: Help output should contain 'Aura - Intelligent CLI Assistant', got: Aura is an intelligent command-line interface assistant designed to augment
+        your existing shell with context-aware suggestions, AI-powered assistance,
+        and intelligent navigation.
+        
+        Usage:
+          aura [command]
+        
+        Available Commands:
+          ask         Ask AI assistant for help
+          bookmark    Manage directory bookmarks
+          completion  Generate the autocompletion script for the specified shell
+          do          Show context-aware action suggestions
+          git         AI-powered Git operations
+          go          Navigate to bookmarked directories
+          help        Help about any command
+          new         Create a new file and open it in your default editor
+          project     Create a project from template
+          uninstall   Uninstall Aura CLI and remove all related files
+        
+        Flags:
+          -h, --help      help for aura
+          -v, --version   version for aura
+        
+        Use "aura [command] --help" for more information about a command.
+FAIL
+exit status 1
+FAIL	github.com/aura-cli/aura/internal/cmd	1.123s
+PASS
+ok  	github.com/aura-cli/aura/internal/config	0.458s
+--- FAIL: TestDetectNodeContext (0.00s)
+    detectors_test.go:130: Missing expected Node action: Run start script
+    detectors_test.go:130: Missing expected Node action: Run test script
+    detectors_test.go:130: Missing expected Node action: Run build script
+--- FAIL: TestDetectGoContext (0.00s)
+    detectors_test.go:242: Missing expected Go action: Run tests
+    detectors_test.go:242: Missing expected Go action: Download dependencies
+--- FAIL: TestDetectDockerContext (0.00s)
+    detectors_test.go:303: Missing expected Docker action: Run container
+--- FAIL: TestDetectMakeContext (0.00s)
+    detectors_test.go:368: Missing expected Make action: View available targets
+    detectors_test.go:368: Missing expected Make action: Run default target
+FAIL
+exit status 1
+FAIL	github.com/aura-cli/aura/internal/context	0.231s
+--- FAIL: TestNewDockerMode (0.15s)
+    db_test.go:59: Failed to create database in docker mode: failed to ensure Docker container is running: failed to start aura-db container: exit status 125
+FAIL
+exit status 1
+FAIL	github.com/aura-cli/aura/internal/db	0.726s
+FAIL

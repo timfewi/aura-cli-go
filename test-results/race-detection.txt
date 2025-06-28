@@ -1,0 +1,13 @@
+# runtime/cgo
+cgo: C compiler "gcc" not found: exec: "gcc": executable file not found in %PATH%
+# github.com/aura-cli/aura/assets
+# [github.com/aura-cli/aura/assets]
+assets\embed_test.go:9:5: comparison of function Open == nil is always false
+FAIL	github.com/aura-cli/aura/assets [build failed]
+FAIL	github.com/aura-cli/aura/cmd/aura [build failed]
+FAIL	github.com/aura-cli/aura/internal/ai [build failed]
+FAIL	github.com/aura-cli/aura/internal/cmd [build failed]
+FAIL	github.com/aura-cli/aura/internal/config [build failed]
+FAIL	github.com/aura-cli/aura/internal/context [build failed]
+FAIL	github.com/aura-cli/aura/internal/db [build failed]
+FAIL

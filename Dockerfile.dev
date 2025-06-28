@@ -1,0 +1,39 @@
+# Development Dockerfile
+FROM golang:1.21-alpine
+
+# Install development dependencies
+RUN apk add --no-cache \
+    git \
+    gcc \
+    musl-dev \
+    sqlite \
+    sqlite-dev \
+    make \
+    bash \
+    curl \
+    vim
+
+# Install development tools
+RUN go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest && \
+    go install golang.org/x/tools/cmd/goimports@latest && \
+    go install github.com/air-verse/air@latest
+
+# Set working directory
+WORKDIR /workspace
+
+# Install Go dependencies (will be cached if go.mod doesn't change)
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Set environment variables for development
+ENV CGO_ENABLED=1
+ENV GOOS=linux
+ENV GOARCH=amd64
+ENV AURA_ENV=development
+
+# Create directories
+RUN mkdir -p /workspace/data/sqlite && \
+    mkdir -p /workspace/bin
+
+# Default command
+CMD ["tail", "-f", "/dev/null"]
