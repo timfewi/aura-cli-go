@@ -19,6 +19,7 @@ func TestMain(t *testing.T) {
 	// The important thing is that the function is callable and doesn't panic
 	if err == nil {
 		// If no error, that's also fine - it means help was shown
+		t.Log("cmd.Execute() called successfully, no error returned")
 	}
 }
 

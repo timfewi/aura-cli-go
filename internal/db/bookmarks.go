@@ -118,23 +118,13 @@ func (db *DB) ListBookmarks() ([]*Bookmark, error) {
 }
 
 func (db *DB) listBookmarksDocker() ([]*Bookmark, error) {
-	cmd := exec.Command("docker", "exec", db.containerName, "sqlite3", "/data/aura.db",
-		"SELECT id, alias, path, created_at FROM bookmarks ORDER BY alias;")
-
-	output, err := cmd.Output()
+	results, err := db.queryDockerSQL("SELECT id, alias, path, created_at FROM bookmarks ORDER BY alias")
 	if err != nil {
 		return nil, err
 	}
 
-	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
 	var bookmarks []*Bookmark
-
-	for _, line := range lines {
-		if line == "" {
-			continue
-		}
-
-		parts := strings.Split(line, "|")
+	for _, parts := range results {
 		if len(parts) < 4 {
 			continue
 		}

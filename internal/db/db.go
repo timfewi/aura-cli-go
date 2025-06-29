@@ -62,7 +62,7 @@ func (db *DB) Close() error {
 }
 
 // execSQL executes SQL in either Docker or local mode
-func (db *DB) execSQL(query string, args ...interface{}) error {
+func (db *DB) execSQL(query string, args ...any) error {
 	if db.isDockerMode {
 		return db.execDockerSQL(query, args...)
 	}
@@ -71,17 +71,8 @@ func (db *DB) execSQL(query string, args ...interface{}) error {
 	return err
 }
 
-// querySQL executes a query in either Docker or local mode
-func (db *DB) querySQL(query string, args ...interface{}) (*sql.Rows, error) {
-	if db.isDockerMode {
-		return db.queryDockerSQL(query, args...)
-	}
-
-	return db.conn.Query(query, args...)
-}
-
 // execDockerSQL executes SQL via docker exec
-func (db *DB) execDockerSQL(query string, args ...interface{}) error {
+func (db *DB) execDockerSQL(query string, args ...any) error {
 	// Build the SQL command with arguments
 	sqlCmd := query
 	for i, arg := range args {
@@ -93,11 +84,8 @@ func (db *DB) execDockerSQL(query string, args ...interface{}) error {
 	return cmd.Run()
 }
 
-// queryDockerSQL executes a query via docker exec
-func (db *DB) queryDockerSQL(query string, args ...interface{}) (*sql.Rows, error) {
-	// For Docker mode, we need to create a temporary connection
-	// This is less efficient but maintains compatibility
-
+// queryDockerSQL executes a query via docker exec and returns parsed results
+func (db *DB) queryDockerSQL(query string, args ...any) ([][]string, error) {
 	// Build the SQL command with arguments
 	sqlCmd := query
 	for i, arg := range args {
@@ -111,9 +99,18 @@ func (db *DB) queryDockerSQL(query string, args ...interface{}) (*sql.Rows, erro
 		return nil, err
 	}
 
-	// Parse the output and create a virtual result set
-	// For now, return an error indicating this needs to be handled differently
-	return nil, fmt.Errorf("query operations in Docker mode need special handling: %s", string(output))
+	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
+	var results [][]string
+
+	for _, line := range lines {
+		if line == "" {
+			continue
+		}
+		parts := strings.Split(line, "|")
+		results = append(results, parts)
+	}
+
+	return results, nil
 }
 
 // initialize creates the necessary tables.

@@ -43,6 +43,7 @@ func TestNewClient(t *testing.T) {
 	}
 	if client == nil {
 		t.Error("Client is nil")
+		return
 	}
 	if client.apiKey != "sk-test-key-123" {
 		t.Errorf("API key = %v, want sk-test-key-123", client.apiKey)
@@ -93,7 +94,10 @@ func TestClientAsk(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(response))
+		if _, err := w.Write([]byte(response)); err != nil {
+			t.Errorf("Failed to write response: %v", err)
+		}
+		
 	}))
 	defer server.Close()
 
@@ -129,7 +133,9 @@ func TestClientAskWithError(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte(response))
+		if _, err := w.Write([]byte(response)); err != nil {
+			t.Errorf("Failed to write response: %v", err)
+		}
 	}))
 	defer server.Close()
 
@@ -166,7 +172,9 @@ func TestClientGenerateCommitMessage(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(response))
+		if _, err := w.Write([]byte(response)); err != nil {
+			t.Errorf("Failed to write response: %v", err)
+		}
 	}))
 	defer server.Close()
 
@@ -220,7 +228,9 @@ func TestClientExplainCode(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(response))
+		if _, err := w.Write([]byte(response)); err != nil {
+			t.Errorf("Failed to write response: %v", err)
+		}
 	}))
 	defer server.Close()
 
@@ -270,7 +280,9 @@ func TestClientSuggestCommands(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(response))
+		if _, err := w.Write([]byte(response)); err != nil {
+			t.Errorf("Failed to write response: %v", err)
+		}
 	}))
 	defer server.Close()
 
@@ -299,7 +311,9 @@ func TestClientWithTimeout(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		time.Sleep(2 * time.Second) // Delay longer than timeout
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"choices":[{"message":{"content":"response"}}]}`))
+		if _, err := w.Write([]byte(`{"choices":[{"message":{"content":"response"}}]}`)); err != nil {
+			t.Errorf("Failed to write response: %v", err)
+		}
 	}))
 	defer server.Close()
 
@@ -328,7 +342,9 @@ func TestClientWithInvalidJSON(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`invalid json response`))
+		if _, err := w.Write([]byte(`invalid json response`)); err != nil {
+			t.Errorf("Failed to write response: %v", err)
+		}
 	}))
 	defer server.Close()
 

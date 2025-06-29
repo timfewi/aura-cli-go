@@ -9,7 +9,7 @@
 ## ⚡ Installation
 
 ```bash
-git clone https://github.com/your-org/aura-cli-go.git
+git clone https://github.com/timfewi/aura-cli-go.git
 cd aura-cli-go
 ./install.sh
 ```

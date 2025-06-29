@@ -21,7 +21,11 @@ func TestRunDo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get current directory: %v", err)
 	}
-	defer os.Chdir(originalDir)
+	defer func() {
+		if err := os.Chdir(originalDir); err != nil {
+			t.Errorf("Failed to restore original directory: %v", err)
+		}
+	}()
 
 	// Change to temp directory
 	err = os.Chdir(tempDir)
@@ -224,7 +228,11 @@ func TestDoWithContexts(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get current directory: %v", err)
 	}
-	defer os.Chdir(originalDir)
+	defer func () {
+		if err := os.Chdir(originalDir); err != nil {
+			t.Errorf("Failed to restore original directory: %v", err)
+		}
+	}()
 
 	// Change to temp directory
 	err = os.Chdir(tempDir)

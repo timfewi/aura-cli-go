@@ -19,7 +19,11 @@ func TestRunNew(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get current directory: %v", err)
 	}
-	defer os.Chdir(originalDir)
+	defer func() {
+		if err := os.Chdir(originalDir); err != nil {
+			t.Errorf("Failed to restore original directory: %v", err)
+		}
+	}()
 
 	// Change to temp directory
 	err = os.Chdir(tempDir)
@@ -99,7 +103,11 @@ func TestRunNewFileExists(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get current directory: %v", err)
 	}
-	defer os.Chdir(originalDir)
+	defer func() {
+		if err := os.Chdir(originalDir); err != nil {
+			t.Errorf("Failed to restore original directory: %v", err)
+		}
+	}()
 
 	err = os.Chdir(tempDir)
 	if err != nil {
@@ -222,13 +230,13 @@ func TestOpenFileInEditor(t *testing.T) {
 	}
 
 	// Test opening the file (this may fail if no editor is available, but shouldn't panic)
-	err = openFileInEditor(testFile)
+	_ = openFileInEditor(testFile)
 	// We don't assert on the error since editor availability varies by system
 	// Just ensure the function completes without panic
 
 	// Test with non-existent file
 	nonExistentFile := filepath.Join(tempDir, "nonexistent.txt")
-	err = openFileInEditor(nonExistentFile)
+	_ = openFileInEditor(nonExistentFile)
 	// This should handle the error gracefully
 }
 
